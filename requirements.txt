@@ -1,0 +1,10 @@
+streamlit
+pandas
+SpeechRecognition
+librosa
+soundfile
+streamlit-mic-recorder
+pydub
+openpyxl
+
+
