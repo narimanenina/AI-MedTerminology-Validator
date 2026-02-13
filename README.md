@@ -13,7 +13,7 @@
 🔗 Connect
 Project Demo (X): [Link to your Video]
 
-Developer: [Your Name]
+Developer: [Narimane Chetioui/The AI Crew team on SURGE × OpenClaw Hackathon Hackathon]
 
 URL: https://ai-medterminology-validator-rzd4a3lkf75fttnmkye7gz.streamlit.app/
 
