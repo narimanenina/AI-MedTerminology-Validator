@@ -1,39 +1,19 @@
-# AI-based Speech Analysis and Segmentation for Children with Phonological Disorders
+# Web3 + AI platform for medical pronunciation training for medical students
+<img width="2168" height="140" alt="image" src="https://github.com/user-attachments/assets/0e8b48a4-5ff7-4f74-a01b-b467fa07a8ad" />
 
-## Description
-This project focuses on using Artificial Intelligence techniques to analyze and segment speech produced by children with phonological speech disorders.  
-The goal is to support research and clinical applications in speech therapy by providing automated tools for speech analysis.
+📝 Hackathon Requirements Checklist
+[x] AI Agent: Intelligent pronunciation feedback.
 
-## Objectives
-- Analyze children's speech signals
-- Segment speech into phonemes or syllables
-- Detect phonological errors using AI models
-- Assist speech therapists and researchers
+[x] Web3 Integration: Wallet connection and token reward logic.
 
-## Technologies Used
-- Python
-- Machine Learning / Deep Learning
-- Speech Processing
-- Librosa
-- TensorFlow / PyTorch (depending on the model)
+[x] Data Ownership: Transparent learning logs linked to user wallets.
 
-## Dataset
-The dataset consists of speech recordings of children with phonological disorders.  
-Data may be manually annotated for training and evaluation purposes.
+[x] Incentive System: Learn-to-earn model with $SURGE tokens.
 
-> Note: Sensitive data is not shared publicly.
+🔗 Connect
+Project Demo (X): [Link to your Video]
 
-## Project Status
-- Data collection: in progress
-- Manual annotation: in progress
-- Model development: planned
+Developer: [Your Name]
 
-## Future Work
-- Improve segmentation accuracy
-- Add automatic error classification
-- Build a simple user interface for therapists
+URL: https://ai-medterminology-validator-rzd4a3lkf75fttnmkye7gz.streamlit.app/
 
-## Author
-Student project in Artificial Intelligence / Speech Processing
-
-URL: https://arabic-speech-therapy-c4m28yyzswdajkcinqqqgk.streamlit.app/#tqryr-alakhtae-almktshft
