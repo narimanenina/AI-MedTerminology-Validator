@@ -4,148 +4,157 @@ import speech_recognition as sr
 import io
 import difflib
 import os
-import re
 from pydub import AudioSegment
 from streamlit_mic_recorder import mic_recorder
 from datetime import datetime
 
-# --- 1. إعدادات الصفحة والتصميم (بروح طبية وتقنية) ---
-st.set_page_config(page_title="MedSpeak AI | Web3 Medical Agent", layout="wide")
+# --- 1. إعدادات المنصة ---
+st.set_page_config(page_title="MedSpeak AI | Web3 Agent", layout="wide")
 
+# تصميم واجهة مستخدم احترافية
 st.markdown("""
     <style>
-    .stApp { background-color: #f8f9fa; }
-    .reward-card { 
-        padding: 20px; 
-        border-radius: 15px; 
-        background: linear-gradient(135deg, #007bff, #6610f2); 
-        color: white;
-        text-align: center;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
+    .main { background-color: #f4f7f6; }
+    .stMetric { background-color: #ffffff; padding: 15px; border-radius: 10px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+    .definition-box { padding: 20px; border-radius: 10px; background-color: #e9ecef; border-left: 5px solid #007bff; margin-bottom: 20px; }
+    .reward-banner { padding: 15px; border-radius: 10px; background: linear-gradient(90deg, #28a745, #218838); color: white; text-align: center; font-weight: bold; }
     </style>
     """, unsafe_allow_html=True)
 
-# --- 2. إدارة البيانات الطبية والمكافآت ---
+# --- 2. تحميل البيانات ---
 @st.cache_data
-def load_medical_db():
-    # محاكاة لملف المصطلحات الطبية
-    data = {
-        'term': ['Otorhinolaryngology', 'Myocardial Infarction', 'Anaphylaxis', 'Gastroenteritis', 'Hypercholesterolemia'],
-        'ipa': ['oʊtoʊˌraɪnoʊ', 'ˌmaɪəˈkɑːrdiəl', 'ˌænəfɪˈlæksɪs', 'ˌɡæstroʊˌɛntəˈraɪtɪs', 'ˌhaɪpərhəˌlɛstərə'],
-        'difficulty': ['Hard', 'Medium', 'Medium', 'Medium', 'Hard'],
-        'reward': [50, 20, 15, 15, 45]
-    }
-    return pd.DataFrame(data)
-
-def save_medical_record(address, term, accuracy, reward):
-    # حفظ السجل على أنه "Transaction" محاكية في الـ Web3
-    db_file = 'medical_onchain_records.xlsx'
-    new_tx = {
-        'Timestamp': datetime.now().strftime("%Y-%m-%d %H:%M"),
-        'Wallet_Address': address,
-        'Medical_Term': term,
-        'Accuracy': f"{accuracy}%",
-        'Status': 'Verified & Rewarded',
-        'Reward_Amount': f"{reward} $SURGE"
-    }
-    df_new = pd.DataFrame([new_tx])
-    if os.path.exists(db_file):
-        df_existing = pd.read_excel(db_file)
-        df_final = pd.concat([df_existing, df_new], ignore_index=True)
+def load_data():
+    file_path = 'medical_master_db.csv'
+    if os.path.exists(file_path):
+        return pd.read_csv(file_path)
     else:
-        df_final = df_new
-    df_final.to_excel(db_file, index=False)
+        st.error("Missing medical_master_db.csv file!")
+        return pd.DataFrame()
 
-# --- 3. محاكاة ربط المحفظة (Web3 Integration) ---
+df_med = load_data()
+
+# --- 3. محاكاة منطق الـ Web3 والمكافآت ---
+if 'wallet' not in st.session_state:
+    st.session_state['wallet'] = {"address": "0x71C...392a", "balance": 0.0, "connected": False}
+
 def connect_wallet():
-    st.session_state['connected'] = True
-    st.session_state['address'] = "0x71C941...392a"
-    st.session_state['balance'] = 1250.0
+    st.session_state['wallet']['connected'] = True
+    st.session_state['wallet']['balance'] = 150.0 # رصيد ابتدائي افتراضي
 
-# --- 4. واجهة المستخدم الرئيسية ---
-st.title("🩺 MedSpeak AI")
-st.subheader("Smart Medical Pronunciation & Web3 Rewards")
+def save_onchain_log(term, accuracy, reward):
+    log_file = 'web3_learning_logs.xlsx'
+    new_entry = {
+        'Timestamp': datetime.now().strftime("%Y-%m-%d %H:%M"),
+        'Student_Wallet': st.session_state['wallet']['address'],
+        'Term': term,
+        'Accuracy': f"{accuracy}%",
+        'Reward_Claimed': f"{reward} $SURGE"
+    }
+    df_new = pd.DataFrame([new_entry])
+    if os.path.exists(log_file):
+        df_old = pd.read_excel(log_file)
+        pd.concat([df_old, df_new], ignore_index=True).to_excel(log_file, index=False)
+    else:
+        df_new.to_excel(log_file, index=False)
 
-# القائمة الجانبية للهوية الرقمية
+# --- 4. واجهة المستخدم الجانبية (Sidebar) ---
 with st.sidebar:
-    st.header("🌐 Web3 Identity")
-    if 'connected' not in st.session_state:
-        if st.button("Connect Wallet (Surge)"):
+    st.title("🌐 Web3 Identity")
+    if not st.session_state['wallet']['connected']:
+        if st.button("🔌 Connect Wallet (Surge)"):
             connect_wallet()
             st.rerun()
     else:
-        st.markdown(f"""
-        <div class='reward-card'>
-            <small>Connected Wallet</small><br>
-            <strong>{st.session_state['address']}</strong><br><br>
-            <small>Current Balance</small><br>
-            <h3>{st.session_state['balance']} $SURGE</h3>
-        </div>
-        """, unsafe_allow_html=True)
+        st.success(f"Connected: {st.session_state['wallet']['address']}")
+        st.metric("Balance", f"{st.session_state['wallet']['balance']} $SURGE")
+        st.info("Identity verified on Moltbook Protocol.")
 
-# منطقة ممارسة المصطلحات
-df_med = load_medical_db()
-col_a, col_b = st.columns([1, 1])
+# --- 5. منطقة التعلم الرئيسية ---
+st.title("🩺 MedSpeak: AI Pronunciation Agent")
+st.write("Master medical terminology, own your learning data, and earn rewards.")
 
-with col_a:
-    st.info("💡 اختر مصطلحاً طبياً للتدريب عليه وكسب المكافآت.")
-    target_term = st.selectbox("Select Medical Term:", df_med['term'].tolist())
-    term_data = df_med[df_med['term'] == target_term].iloc[0]
+if not df_med.empty:
+    # اختيار المصطلح (عرض باللغتين لسهولة البحث)
+    selected_term_idx = st.selectbox(
+        "Select Medical Term / اختر المصطلح الطبي:",
+        range(len(df_med)),
+        format_func=lambda x: f"{df_med.iloc[x]['term_en']} | {df_med.iloc[x]['term_ar']}"
+    )
     
-    st.markdown(f"""
-    **Phonetic Guide:** `/{term_data['ipa']}/`  
-    **Difficulty:** `{term_data['difficulty']}`  
-    **Potential Reward:** `{term_data['reward']} $SURGE`
-    """)
+    term_info = df_med.iloc[selected_term_idx]
 
-with col_b:
-    st.subheader("🎤 Voice Recording")
-    record = mic_recorder(start_prompt="Start Recording", stop_prompt="Stop to Verify", key='med_recorder')
-    
-    if record:
-        st.audio(record['bytes'])
-        try:
-            with st.spinner("Analyzing Medical Phonemes..."):
-                # تحويل الصوت
-                audio_segment = AudioSegment.from_file(io.BytesIO(record['bytes']))
-                wav_io = io.BytesIO()
-                audio_segment.export(wav_io, format="wav")
-                wav_io.seek(0)
-                
-                r = sr.Recognizer()
-                with sr.AudioFile(wav_io) as source:
-                    audio_content = r.record(source)
-                    # استخدام اللغة الإنجليزية للمصطلحات الطبية
-                    ai_text = r.recognize_google(audio_content, language="en-US")
-                
-                # حساب الدقة
-                accuracy = round(difflib.SequenceMatcher(None, target_term.lower(), ai_text.lower()).ratio() * 100, 1)
-                
-                st.metric("Pronunciation Accuracy", f"{accuracy}%")
-                
-                if accuracy >= 85:
-                    st.balloons()
-                    st.success(f"Verified! You earned {term_data['reward']} $SURGE")
-                    if 'connected' in st.session_state:
-                        save_medical_record(st.session_state['address'], target_term, accuracy, term_data['reward'])
-                        st.session_state['balance'] += term_data['reward']
-                else:
-                    st.warning(f"Heard: '{ai_text}'. Accuracy too low for reward. Try again!")
+    # عرض التعريفات بـ 3 لغات
+    with st.expander("📖 View Definitions / عرض التعاريف", expanded=True):
+        col_en, col_fr, col_ar = st.columns(3)
+        with col_en:
+            st.markdown(f"**English**\n\n{term_info['def_en']}")
+        with col_fr:
+            st.markdown(f"**Français**\n\n{term_info['def_fr']}")
+        with col_ar:
+            st.markdown(f"**العربية**\n\n{term_info['def_ar']}")
+
+    st.divider()
+
+    # قسم التسجيل والتحليل
+    col_practice, col_result = st.columns([1, 1])
+
+    with col_practice:
+        st.subheader("🎤 Practice Session")
+        st.write(f"Target Pronunciation (IPA): `/{term_info['ipa']}/`")
+        st.write(f"Difficulty: **{term_info['difficulty']}** | Reward: **{term_info['reward_surge']} $SURGE**")
+        
+        audio_record = mic_recorder(
+            start_prompt="⏺️ Click to Speak",
+            stop_prompt="⏹️ Analyze My Voice",
+            key='medical_agent'
+        )
+
+    with col_result:
+        if audio_record:
+            try:
+                with st.spinner("AI Agent is analyzing phonemes..."):
+                    # معالجة الصوت وتحويله لـ WAV
+                    audio_segment = AudioSegment.from_file(io.BytesIO(audio_record['bytes']))
+                    wav_io = io.BytesIO()
+                    audio_segment.export(wav_io, format="wav")
+                    wav_io.seek(0)
                     
-        except Exception as e:
-            st.error("AI could not process the audio. Please speak clearly.")
+                    r = sr.Recognizer()
+                    with sr.AudioFile(wav_io) as source:
+                        audio_data = r.record(source)
+                        # التعرف على الكلام بالإنجليزية الطبية
+                        heard_text = r.recognize_google(audio_data, language="en-US")
+                    
+                    # حساب دقة النطق
+                    accuracy = round(difflib.SequenceMatcher(None, term_info['term_en'].lower(), heard_text.lower()).ratio() * 100)
+                    
+                    st.subheader("📊 Analysis Result")
+                    st.write(f"AI Heard: **'{heard_text}'**")
+                    st.metric("Accuracy Score", f"{accuracy}%")
+                    
+                    if accuracy >= 80:
+                        st.balloons()
+                        st.markdown(f"""
+                            <div class="reward-banner">
+                                🏆 Success! +{term_info['reward_surge']} $SURGE tokens minted to your wallet.
+                            </div>
+                        """, unsafe_allow_html=True)
+                        if st.session_state['wallet']['connected']:
+                            st.session_state['wallet']['balance'] += term_info['reward_surge']
+                            save_onchain_log(term_info['term_en'], accuracy, term_info['reward_surge'])
+                    else:
+                        st.warning("Accuracy is low. Pay attention to the IPA guide and try again.")
+            except Exception:
+                st.error("Could not recognize audio. Please try to speak more clearly or check your mic.")
 
-# --- عرض سجل المعاملات (شفافية البيانات) ---
+# --- 6. شفافية البيانات (Data Ownership) ---
 st.divider()
-if st.checkbox("🔍 View On-Chain Learning Logs"):
-    if os.path.exists('medical_onchain_records.xlsx'):
-        logs = pd.read_excel('medical_onchain_records.xlsx')
-        st.dataframe(logs, use_container_width=True)
+if st.checkbox("🔍 View My Decentralized Learning History"):
+    if os.path.exists('web3_learning_logs.xlsx'):
+        history = pd.read_excel('web3_learning_logs.xlsx')
+        st.dataframe(history, use_container_width=True)
     else:
-        st.write("No transactions recorded yet.")
-
-
+        st.info("No learning records found on-chain yet.")
 
 
 
