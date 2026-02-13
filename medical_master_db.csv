@@ -1,0 +1,26 @@
+﻿term_en,term_fr,term_ar,def_en,def_fr,def_ar,ipa,difficulty,reward_surge
+Aspirin,Aspirine,أسبرين,Drug used to reduce pain and fever.,Médicament contre la douleur.,دواء لتسكين الألم والحمى.,ˈæspərɪn,Easy,10
+Anemia,Anémie,فقر الدم,Condition with low red blood cells.,Manque de globules rouges.,نقص خلايا الدم الحمراء.,əˈniːmiə,Easy,10
+Diabetes,Diabète,السكري,High blood sugar disease.,Taux de sucre élevé.,ارتفاع سكر الدم.,ˌdaɪəˈbiːtiːz,Medium,20
+Anaphylaxis,Anaphylaxie,الحساسية المفرطة,Severe allergic reaction.,Réaction allergique grave.,رد فعل تحسسي حاد.,ˌænəfɪˈlæksɪs,Medium,30
+Otorhinolaryngology,Oto-rhino-laryngologie,طب الأنف والأذن والحنجرة,"Ear, nose, and throat study.",Étude ORL.,طب الأنف والأذن والحنجرة.,ˌoʊtoʊˌraɪnoʊˌlærɪŋˈɡɒlədʒi,Hard,100
+Myocardial Infarction,Infarctus du myocarde,نوبة قلبية,Heart attack due to blood blockage.,Infarctus du muscle cardiaque.,موت جزء من عضلة القلب.,ˌmaɪəˈkɑːrdiəl ɪnˈfɑːrkʃən,Hard,80
+Gastrointestinal,Gastro-intestinal,الجهاز الهضمي,Related to stomach and intestines.,Relatif à l’appareil digestif.,متعلق بالمعدة والأمعاء.,ˌɡæstroʊɪnˈtɛstɪnəl,Medium,20
+Hypercholesterolemia,Hypercholestérolémie,ارتفاع الكوليسترول,High blood cholesterol.,Excès de cholestérol.,ارتفاع كوليسترول الدم.,ˌhaɪpərhəˌlɛstərəˈliːmiə,Hard,90
+Sphygmomanometer,Sphygmomanomètre,جهاز ضغط الدم,Blood pressure measuring tool.,Tensiomètre.,جهاز قياس الضغط.,ˌsfɪɡmoʊməˈnɒmɪtər,Hard,95
+Ophthalmology,Ophtalmologie,طب العيون,Study of eye disorders.,Soins des yeux.,علاج أمراض العين.,ˌɒfθælˈmɒlədʒi,Medium,30
+Antibiotic,Antibiotique,مضاد حيوي,Bacteria-killing medicine.,Médicament antibactérien.,دواء قاتل للبكتيريا.,ˌæntibaɪˈɒtɪk,Easy,15
+Cardiovascular,Cardiovasculaire,الأوعية الدموية القلبية,Heart and blood vessel system.,Cœur et vaisseaux.,جهاز القلب والأوعية.,ˌkɑːrdioʊˈvæskjələr,Medium,30
+Dermatology,Dermatologie,طب الجلد,Skin disease study.,Étude de la peau.,علاج أمراض الجلد.,ˌdɜːrməˈtɒlədʒi,Medium,20
+Neurology,Neurologie,طب الأعصاب,Nervous system study.,Étude du système nerveux.,علاج أمراض الجهاز العصبي.,nʊˈrɒlədʒi,Medium,25
+Pediatrics,Pédiatrie,طب الأطفال,Medical care for children.,Médecine des enfants.,طب الأطفال.,ˌpiːdiˈætrɪks,Medium,20
+Radiology,Radiologie,الأشعة,Medical imaging study.,Imagerie médicale.,الأشعة التشخيصية.,ˌreɪdiˈɒlədʒi,Medium,20
+Surgery,Chirurgie,الجراحة,Physical treatment of injuries.,Intervention physique.,العلاج الجراحي.,ˈsɜːrdʒəri,Easy,15
+Vaccination,Vaccination,التطعيم,Immunity-boosting injection.,Injection immunitaire.,حقن لتعزيز المناعة.,ˌvæksɪˈneɪʃən,Easy,10
+Thermometer,Thermomètre,ميزان الحرارة,Temperature measuring tool.,Mesure de chaleur.,قياس حرارة الجسم.,θərˈmɒmɪtər,Easy,10
+Stethoscope,Stéthoscope,السماعة الطبية,Body sound listening tool.,Écoute des bruits internes.,سماع أصوات الجسم.,ˈstɛθəskoʊp,Medium,20
+Psychiatry,Psychiatrie,الطب النفسي,Mental health study.,Santé mentale.,علاج الأمراض النفسية.,saɪˈkaɪətri,Medium,25
+Oncology,Oncologie,علم الأورام,Cancer study and treatment.,Étude du cancer.,دراسة وعلاج الأورام.,ɒnˈkɒlədʒi,Medium,25
+Endocrinology,Endocrinologie,علم الغدد الصماء,Hormone system study.,Étude des hormones.,دراسة الهرمونات.,ˌɛndoʊkrɪˈnɒlədʒi,Hard,45
+Hematology,Hématologie,علم الدم,Blood-related diseases study.,Étude du sang.,دراسة أمراض الدم.,ˌhiːməˈtɒlədʒi,Medium,25
+Pathology,Pathologie,علم الأمراض,Study of disease causes/effects.,Étude des maladies.,دراسة مسببات الأمراض.,pəˈθɒlədʒi,Medium,25
